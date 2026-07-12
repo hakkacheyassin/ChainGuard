@@ -25,7 +25,7 @@
   header { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
   header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
   header p { color: var(--dim); font-size: 13px; }
-  .lead { font-size: 17px; color: var(--dim); margin: 14px 0 6px; max-width: 720px; }
+  .lead { font-size: 17px; color: var(--dim); margin: 14px 0 6px; max-width: 760px; }
   .badge {
     display: inline-block; margin-top: 14px; padding: 5px 14px; border-radius: 99px;
     font-size: 12px; font-weight: 600; color: var(--orange-dark);
@@ -51,29 +51,32 @@
   figure img {
     width: 100%; border: 1px solid var(--border); border-radius: 12px;
     box-shadow: 0 8px 24px rgba(40,39,45,.08); display: block;
-    background: #f1f0f4; min-height: 160px;
+    background: #f1f0f4;
   }
   figcaption { font-size: 12.5px; color: var(--dim); margin-top: 8px; text-align: center; font-weight: 600; }
+  /* pages detail */
+  .pages { display: flex; flex-direction: column; gap: 12px; }
+  .page-item { display: flex; gap: 14px; align-items: flex-start; }
+  .page-item .num {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px;
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    color: var(--orange-dark); background: rgba(252,109,38,.1); border: 1px solid rgba(252,109,38,.25);
+  }
+  .page-item h3 { font-size: 15px; }
+  .page-item p { font-size: 13.5px; color: var(--dim); }
   /* features */
   .features { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .feature { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
   .feature .dot { color: var(--green); font-weight: 800; }
   .feature b { display: block; }
   .feature span { color: var(--dim); font-size: 13px; }
-  /* code */
-  pre {
-    background: #1f1e24; color: #ececef; border-radius: 12px;
-    padding: 16px 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    overflow-x: auto; margin: 12px 0;
-  }
-  pre .c { color: #8b98a8; }
+  /* security list */
+  .sec-list { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+  .sec-list li { display: flex; gap: 10px; align-items: flex-start; }
+  .sec-list .lock { color: var(--orange-dark); font-weight: 800; }
+  .sec-list span { color: var(--dim); }
   code.inline { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: #f1f0f4; padding: 2px 7px; border-radius: 6px; }
-  /* table */
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  th { text-align: left; color: var(--dim); font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; }
-  th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
-  tr:last-child td { border-bottom: none; }
-  td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--orange-dark); white-space: nowrap; }
   footer { margin-top: 60px; text-align: center; color: var(--dim); font-size: 13px; }
   @media (max-width: 760px) {
     .steps, .shots, .features { grid-template-columns: 1fr; }
@@ -100,44 +103,56 @@
     </div>
   </header>
 
-  <p class="lead">Scan any GitHub or GitLab repository to generate its <b>SBOM</b>, uncover <b>vulnerabilities</b>, and review <b>license compliance</b> — on any stack, automatically.</p>
+  <p class="lead">ChainGuard is a full-stack platform that analyzes the <b>software supply chain</b> of any project. Paste a GitHub or GitLab repository URL and it clones the code, builds a complete <b>SBOM</b> (Software Bill of Materials), matches every dependency against known <b>CVE vulnerability databases</b>, and summarizes <b>license compliance</b> — all automatically, on any technology stack (JavaScript, Python, Go, Java, Rust, PHP and more).</p>
+  <span class="badge">Powered by Syft &amp; Grype</span>
 
   <h2><span>01.</span> How the app works</h2>
   <div class="steps">
-    <div class="card step"><b>STEP 1</b><h3>Paste a repo URL</h3><p>GitHub or GitLab, public or private (with a token).</p></div>
-    <div class="card step"><b>STEP 2</b><h3>Confirm the stack</h3><p>Languages, stars and branch are detected automatically.</p></div>
-    <div class="card step"><b>STEP 3</b><h3>Live scan phases</h3><p>Clone → SBOM (Syft) → vulnerability scan (Grype).</p></div>
-    <div class="card step"><b>STEP 4</b><h3>Download the report</h3><p>CycloneDX, SPDX, JSON or CSV from the completion popup.</p></div>
+    <div class="card step"><b>STEP 1</b><h3>Paste a repo URL</h3><p>GitHub or GitLab, public or private (with an access token).</p></div>
+    <div class="card step"><b>STEP 2</b><h3>Confirm the stack</h3><p>Languages, stars, size and branch are detected automatically and shown for confirmation.</p></div>
+    <div class="card step"><b>STEP 3</b><h3>Live scan phases</h3><p>Clone → SBOM generation (Syft) → vulnerability matching (Grype), with real-time progress.</p></div>
+    <div class="card step"><b>STEP 4</b><h3>Download the report</h3><p>A completion popup offers the SBOM (CycloneDX, SPDX) and the report (JSON, CSV).</p></div>
   </div>
 
   <h2><span>02.</span> Screenshots</h2>
   <div class="shots">
-    <figure><img src="docs/screenshots/landing.png" alt="Landing page" /><figcaption>Landing page</figcaption></figure>
-    <figure><img src="docs/screenshots/dashboard.png" alt="Security dashboard" /><figcaption>Security Dashboard — score, severity, licenses</figcaption></figure>
-    <figure><img src="docs/screenshots/inspect.png" alt="Stack detection" /><figcaption>Stack detection &amp; scan confirmation</figcaption></figure>
-    <figure><img src="docs/screenshots/scan-complete.png" alt="Scan complete" /><figcaption>Scan complete — SBOM &amp; report downloads</figcaption></figure>
-    <figure><img src="docs/screenshots/dependency-tree.png" alt="Dependency tree" /><figcaption>Dependency Tree — click a package for CVE details</figcaption></figure>
-    <figure><img src="docs/screenshots/analyze-sbom.png" alt="Analyze SBOM" /><figcaption>Analyze SBOM — upload an existing SBOM file</figcaption></figure>
-    <figure><img src="docs/screenshots/histrory.png" alt="History" /><figcaption>History — view past scans</figcaption></figure>
-    <figure><img src="docs/screenshots/licences.png" alt="Licenses" /><figcaption>Licenses — view license compliance</figcaption></figure>
-        <figure><img src="docs/screenshots/vul.png" alt="Vulnerabilities" /><figcaption>Vulnerabilities — view CVE details</figcaption></figure>
-
-
+    <figure><img src="docs/screenshots/landing.png" alt="Landing page" /><figcaption>Landing page — product overview and entry point</figcaption></figure>
+    <figure><img src="docs/screenshots/dashboard.png" alt="Security dashboard" /><figcaption>Security Dashboard — score gauge, severity breakdown, licenses</figcaption></figure>
+    <figure><img src="docs/screenshots/inspect.png" alt="Stack detection" /><figcaption>Stack detection — repo info confirmed before scanning</figcaption></figure>
+    <figure><img src="docs/screenshots/scan-complete.png" alt="Scan complete" /><figcaption>Scan complete — instant SBOM &amp; report downloads</figcaption></figure>
+    <figure><img src="docs/screenshots/dependency-tree.png" alt="Dependency tree" /><figcaption>Dependency Tree — interactive graph, click a package for CVE details</figcaption></figure>
+    <figure><img src="docs/screenshots/vul.png" alt="Vulnerabilities" /><figcaption>Vulnerabilities — all findings with severity filters and search</figcaption></figure>
+    <figure><img src="docs/screenshots/licences.png" alt="Licenses" /><figcaption>Licenses — distribution and per-package compliance breakdown</figcaption></figure>
+    <figure><img src="docs/screenshots/histrory.png" alt="History" /><figcaption>History — every scan saved with download buttons</figcaption></figure>
+    <figure><img src="docs/screenshots/analyze-sbom.png" alt="Analyze SBOM" /><figcaption>Analyze SBOM — upload an existing SBOM file for an instant report</figcaption></figure>
   </div>
 
-  <h2><span>03.</span> Features</h2>
+  <h2><span>03.</span> The pages in detail</h2>
+  <div class="card pages">
+    <div class="page-item"><span class="num">01</span><div><h3>Security Dashboard</h3><p>The home of every scan: total packages, vulnerability count, an animated security score gauge (0–100), findings by severity, the top vulnerabilities table, license summary and a live graph of the most vulnerable dependencies of the last scanned project.</p></div></div>
+    <div class="page-item"><span class="num">02</span><div><h3>Dependency Tree</h3><p>An interactive graph of the scanned project. Vulnerable packages appear first with severity colors and animated edges. Clicking any package opens a panel with its version, license, CVE list, fix versions and dependency path. A project selector switches between all scanned repositories.</p></div></div>
+    <div class="page-item"><span class="num">03</span><div><h3>Vulnerabilities</h3><p>The complete list of findings from the latest scan, filterable by severity (Critical / High / Medium / Low) and searchable by CVE ID or package name. Each row shows the installed version and the version that fixes the issue.</p></div></div>
+    <div class="page-item"><span class="num">04</span><div><h3>Licenses</h3><p>License compliance at a glance: a distribution chart plus a table grouping every package by its license — essential for legal review before shipping. Includes a project selector too.</p></div></div>
+    <div class="page-item"><span class="num">05</span><div><h3>History</h3><p>Every scan the user has run, with its status (completed / failed with the exact error), findings summary, security score and one-click downloads: SBOM in CycloneDX or SPDX, report in CSV or JSON.</p></div></div>
+    <div class="page-item"><span class="num">06</span><div><h3>Analyze SBOM</h3><p>Already have an SBOM from another tool or a vendor? Drag and drop the CycloneDX or SPDX file: the format is detected automatically and a report is generated instantly — packages, license breakdown and exports.</p></div></div>
+    <div class="page-item"><span class="num">07</span><div><h3>SBOM Explorer</h3><p>A searchable table of every package detected in the scan: name, exact version, license and vulnerability status per package.</p></div></div>
+    <div class="page-item"><span class="num">08</span><div><h3>Settings</h3><p>GitHub and GitLab access tokens for private repositories, each with a Test button that verifies the token against the provider and shows the connected account. Plus scan preferences.</p></div></div>
+  </div>
+
+  <h2><span>04.</span> Features</h2>
   <div class="card">
     <div class="features">
       <div class="feature"><span class="dot">✓</span><div><b>SBOM generation</b><span>CycloneDX &amp; SPDX in one pass (Syft)</span></div></div>
       <div class="feature"><span class="dot">✓</span><div><b>CVE scanning</b><span>Severity, fix versions, live phases (Grype)</span></div></div>
+      <div class="feature"><span class="dot">✓</span><div><b>Any stack</b><span>npm, Python, Go, Java, Rust, PHP and more — detected automatically</span></div></div>
       <div class="feature"><span class="dot">✓</span><div><b>Dependency tree</b><span>Interactive React Flow graph per project</span></div></div>
       <div class="feature"><span class="dot">✓</span><div><b>License compliance</b><span>Distribution &amp; per-package breakdown</span></div></div>
       <div class="feature"><span class="dot">✓</span><div><b>Analyze SBOM</b><span>Upload an existing SBOM, instant report</span></div></div>
-      <div class="feature"><span class="dot">✓</span><div><b>User accounts</b><span>JWT login — each user sees only their scans</span></div></div>
       <div class="feature"><span class="dot">✓</span><div><b>Private repos</b><span>GitHub &amp; GitLab tokens (browser-only storage)</span></div></div>
       <div class="feature"><span class="dot">✓</span><div><b>History &amp; exports</b><span>Every scan saved with 4 download formats</span></div></div>
     </div>
   </div>
+
 
   <footer>ChainGuard · React + TypeScript · Go Fiber · Syft · Grype · Docker · MIT License</footer>
 </div>
