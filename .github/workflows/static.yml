@@ -33,11 +33,17 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Prepare site
+        run: |
+          mkdir -p /tmp/site/docs
+          cp "$GITHUB_WORKSPACE/app.html" /tmp/site/index.html
+          cp "$GITHUB_WORKSPACE/app.html" /tmp/site/app.htm
+          cp -R "$GITHUB_WORKSPACE/docs/screenshots" /tmp/site/docs/screenshots
+          cp "$GITHUB_WORKSPACE/landing.png" /tmp/site/landing.png
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: /tmp/site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
